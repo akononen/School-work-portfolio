@@ -1,6 +1,6 @@
-#Data-Intensive Programming
+# Data-Intensive Programming
 
-#Languange: Scala
+## Languange: Scala
 
 This project was done as a part of Data-Intensive Programming course.
 The project was done in Scala utilising Apache Spark. The assignment revolved around
