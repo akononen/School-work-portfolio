@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Sales of game {{ game.name }}{% endblock %}
+
+
+
+
+
+{% block content %}
+
+
+{% if sales.exists %}
+<div class="container">
+  <h2>Sales of game: {{ game.name }}</h2>
+
+
+  <table id="game-sales" class="table table-striped table-bordered" style="width:50%">
+    <thead style="font-weight:bold">
+      <tr>
+        <th>Purchase ID</th>
+        <th>Timestamp</th>
+        <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <!-- # Loopataan Games-taulun alkiot läpi alla olevin tiedoin -->
+
+    {% for sale in sales %}
+
+      <tr>
+        <td>{{ sale.id }}</td>
+        <td>{{ sale.timestamp }}</td>
+        <td>{{ sale.price }}€</td>
+      </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+  </table>
+
+  <p>Total sales: {{ sales.count }} ({{ totalsales.price__sum }}€)</p>
+
+<br>
+
+{% else %}
+
+<h2>Game has no sales.</h2>
+
+{% endif %}
+
+</div>
+{% endblock %}

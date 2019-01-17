@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div id="hometext" class="container" >
+  <div class="jumbotron" style="background-color:greenyellow">
+  <h1>Welcome to Webstore!</h1>
+  <h3>Here you can buy an play games, or share your own work with others if
+  you are a developer.</h3>
+  <div id="notification">
+    {% if user.is_authenticated %}
+      {% if user.is_developer %}
+      <h3>Have fun developing!</h3>
+      {% else %}
+      <h3>Have fun playing!</h3>
+      {% endif %}
+    {% else %}
+      <h3>First you must login or signup</h3>
+    {% endif %}
+  </div>
+</div>
+</div>
+{% endblock %}

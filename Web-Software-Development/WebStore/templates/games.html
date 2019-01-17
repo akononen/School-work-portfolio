@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Games{% endblock %}
+
+
+
+
+
+{% block content %}
+
+
+<script>
+  $(document).ready(function() {
+    $('#games').DataTable();
+} );
+</script>
+
+<div class="container">
+
+<h2>Browse games</h2>
+
+<!-- Table that can be sorted by any column. -->
+
+<table id="games" class="table table-striped table-bordered" style="width:100%">
+  <thead style="font-weight:bold">
+    <tr>
+      <th>Game Name</th>
+      <th>Developer</th>
+      <th>Price</th>
+      {% if user.is_developer is False %}
+        <th>Price / Play</th>
+      {% endif %}
+  </tr>
+  </thead>
+  <tbody>
+
+  <!-- # Loopataan Games-taulun alkiot läpi alla olevin tiedoin -->
+
+  {% for game in game_list %}
+
+    <tr>
+      <!--<td>{{ game.id }}</td> -->
+      <td>{{ game.name }}</td>
+      <td>{{ game.developer.username }}</td>
+      <td>{{ game.price }}€</td>
+
+      {% if user.is_developer is False %}
+
+        {% if game in purchase_list %}
+        <td><a href="/play/{{game.id}}">Play</a></td>
+        {% else %}
+        <td><a href="/buygame/{{game.id}}">Buy</a></td>
+        {% endif %}
+
+      {% endif %}
+
+    </tr>
+
+  {% endfor %}
+
+  </tbody>
+
+</table>
+</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block title %} {{game.url}} {% endblock %}
+
+
+{% block content %}
+
+<!-- Developers cannot play games -->
+{% if user.is_developer %}
+<div>
+  <p> Developers can't play games </p>
+  <p> Signup/Login as a player to play</p>
+  <button type="button" onclick="javascript:history.back()">Go Back</button>
+
+</div>
+{% endif %}
+
+
+{% if game in purchased_games %}
+
+<div id="container">
+
+  <div id="game">
+    <iframe src="{{ game.url }}" id=myFrame> </iframe>
+  </div>
+<!-- Making the highscorelist visible when player comes to the page -->
+  <div id="highscores">
+    <ul>TOP 5 Highscores</ul>
+
+    {% for highscore in highscores %}
+
+      <br>{{ highscore.username }}: {{ highscore.score }}</br>
+
+    {% endfor %}
+
+  </div>
+
+
+</div>
+
+
+<style>
+
+  html {
+    !width 100%;
+    !height: 500px;
+  }
+
+  #container {
+    margin: auto;
+  }
+
+  #game {
+    height: 70vh;
+    width:80%;
+    !border: 1px solid blue;
+    float: left;
+  }
+
+  #highscores {
+    width: 20%;
+
+    !border: 1px solid green;
+    margin-left: 80%;
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    !border: 1px solid red;
+    border: none;
+  }
+
+
+
+</style>
+
+{% else %}
+
+  <div>
+    <p> You do not own this game. Buy it from store to play. </p>
+    {{ game.id }} {{purchased}}
+    <button type="button" onclick="javascript:history.back()">Go Back</button>
+  </div>
+
+{% endif %}
+
+
+<script>
+
+
+  var highscorelist = []
+
+  //This eventlistener listens to the messages from iframe.
+  //It can handle highscore saving and shows an alert if the incoming message
+  //cannot be handled.
+  window.addEventListener("message", function(evt){
+
+    if(evt.data.messageType === "SCORE") {
+
+      var score = evt.data.score;
+
+      $.ajax({
+        url: '/update_highscores/',
+        data: {
+          'game': "{{game.id}}",
+          'user': "{{user.username}}",
+          'score': score,
+        },
+
+        dataType: 'json',
+        success: function (data) {
+          var array = JSON.parse(data);
+
+
+          $("#highscores").html("<ul>TOP 5 Highscores</ul>")
+
+          highscorelist = []
+
+          for (i in array){
+
+            highscorelist.push(array[i].fields.username + ": " + array[i].fields.score);
+
+            $("#highscores").append("<br>" + highscorelist[i] + "</br>");
+          }
+
+          }
+      });
+
+      //Features that are not supported by the service.
+    } if (evt.data.messageType === "SAVE"){
+      alert("Sorry, this service doesn't support this feature.");
+    } if (evt.data.messageType === "LOAD_REQUEST"){
+      alert("Sorry, this service doesn't support this feature.");
+    }
+  });
+
+</script>
+
+
+{% endblock %}

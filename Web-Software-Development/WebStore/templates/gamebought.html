@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Buy game{% endblock %}
+
+
+
+
+
+{% block content %}
+
+
+<h2>Buy game: {{ game.name }}, ID: {{ game.id }}</h2><br>
+
+
+
+<p>{{ checksum }}</p>
+
+
+<form action="https://simplepayments.herokuapp.com/pay/" method="POST">
+
+  <input type="hidden" name="pid" value="123456">
+  <input type="hidden" name="sid" value="G059">
+  <input type="hidden" name="amount" value="99.00">
+  <input type="hidden" name="success_url" value="http://www.google.com">
+  <input type="hidden" name="cancel_url" value="http://www.google.com">
+  <input type="hidden" name="error_url" value="http://www.google.com">
+  <input type="hidden" name="checksum" value="{{ checksum }}">
+
+
+  <input type="submit" value="Buy game (9,99€)" />
+</form>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit game{% endblock %}
+
+
+
+
+
+{% block content %}
+<div class="container">
+<h2>Edit game: {{ game.name }}</h2>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <!-- <input type="hidden" name="developer_id" value="{{ user.id }}" required id="id_developer_id"> -->
+  <button type="submit">Edit</button>
+</form>
+
+</div>
+{% endblock %}

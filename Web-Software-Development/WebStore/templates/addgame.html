@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Add game{% endblock %}
+
+
+
+
+
+{% block content %}
+
+<div class="container">
+{% if user.is_developer %}
+
+  <h2> Add Game </h2>
+  <br>Developer: {{ user.username }}
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <!-- <input type="hidden" name="developer_id" value="{{ user.id }}" required id="id_developer_id"> -->
+    <button type="submit">Submit Game</button>
+  </form>
+
+{% else %}
+
+  <br>Only developers can add games. You, {{ user.username }}, are not a developer
+
+{% endif %}
+
+<h2>Add game</h2>
+</div>
+
+
+
+{% endblock %}
