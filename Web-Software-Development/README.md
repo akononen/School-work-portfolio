@@ -1,9 +1,9 @@
 ﻿# Project plan:
 
 ## Group g-059
-Aleksi Könönen aleksi.kononen@student.tut.fi 253630
-Antti Kainulainen antti.kainulainen@student.tut.fi 239849
-Lauri Hakavuori lauri.hakavuori@student.tut.fi 256124
+Aleksi Könönen,
+Antti Kainulainen,
+Lauri Hakavuori 
 
 
 Simple online store where developers can add JavaScript games and players can buy and play the games. The store has a payment service. One JavaScript game also implemented.
